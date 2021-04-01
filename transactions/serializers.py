@@ -32,3 +32,15 @@ class TransactionSerializer(serializers.ModelSerializer):
 
     def get_transaction_type_display(self, obj):
         return TransactionTypE(obj.transaction_type).name
+
+
+class StatsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Account
+        fields = (
+            'id',
+            'name',
+            'amount_in',
+            'amount_out',
+            'balance',
+        )
