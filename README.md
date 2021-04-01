@@ -35,3 +35,4 @@ Transaction:
 
 ## Statistic
 
+Generate statistics for accounts and aggregate transaction value

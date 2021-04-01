@@ -16,3 +16,4 @@ class Transaction(models.Model):
         transaction_type.value, transaction_type.name) for transaction_type in TransactionTypE
     ])
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
+    created = models.DateField(auto_now_add=True)
