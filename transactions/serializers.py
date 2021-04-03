@@ -44,3 +44,8 @@ class StatsSerializer(serializers.ModelSerializer):
             'amount_out',
             'balance',
         )
+
+
+class StatsFilterSerializer(serializers.Serializer):
+    from_date = serializers.DateField(required=True)
+    to_date = serializers.DateField(required=True)
