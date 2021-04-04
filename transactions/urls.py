@@ -10,6 +10,9 @@ router.register('v1/transactions', TransactionViewSet, basename='transactions')
 
 urlpatterns = router.urls
 
+# app_name = 'transactions'
+
 urlpatterns += [
-    path('v1/stats/', StatsView.as_view())
+    path('v1/stats/', StatsView.as_view()),
+    # path('v1/accounts/', AccountViewSet.as_view(), name='accounts')
 ]

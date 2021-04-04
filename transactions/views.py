@@ -1,13 +1,10 @@
-from django.db.models import Sum
-from django.db.models.functions import Coalesce
-from django.shortcuts import render
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from transactions.constans import TransactionTypE
+from transactions.handlers import AccountAggregator
 from transactions.models import Account, Transaction
-from transactions.serializers import TransactionSerializer, AccountSerializer, StatsSerializer, StatsFilterSerializer
+from transactions.serializers import TransactionSerializer, AccountSerializer, StatsFilterSerializer, StatsSerializer
 
 
 class AccountViewSet(viewsets.ModelViewSet):
@@ -30,27 +27,18 @@ class StatsView(APIView):
         filter_serializer = StatsFilterSerializer(data=request.query_params)
         filter_serializer.is_valid(raise_exception=True)
 
-        from_date = filter_serializer.validated_data.get("from_date")
-        to_date = filter_serializer.validated_data.get("to_date")
+        aggregator = AccountAggregator(
+            from_date=filter_serializer.validated_data.get("from_date"),
+            to_date=filter_serializer.validated_data.get("to_date")
+        )
 
-        transaction_qs = Transaction.objects.filter(created__gte=from_date, created__lte=to_date)
-        data = []
+        print(aggregator.aggregate_data)
 
-        for account in Account.objects.all():
-            data.append(
-                {"id": account.id,
-                 "name": account.name,
-                 'account_in': account.amount_in(transaction_qs=transaction_qs),
-                 'account_out': account.amount_out(transaction_qs=transaction_qs),
-                 'balance': account.balance(transaction_qs=transaction_qs),
-                 }
-            )
+        data = aggregator.aggregate_data()
 
-        # serializer = StatsSerializer(instance=Account.objects.all(), many=True)
-
-        response_data = {"results": data, "date": {"from": from_date.isoformat(), "to": to_date.isoformat()}}
-
-        return Response(data=response_data)
+        return Response(data=StatsSerializer(
+            {"results": data, "date": {"from_date": aggregator.from_date, "to_date": aggregator.to_date}}
+        ).data)
 
         ""
 
