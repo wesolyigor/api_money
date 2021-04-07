@@ -29,3 +29,4 @@ class AccountAggregator:
                  }
             )
         return data
+

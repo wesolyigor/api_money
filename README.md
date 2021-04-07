@@ -4,7 +4,7 @@ This app manage to keep the money transactions on a user account. On the other h
 statistic of transactions in daily, weekely, monthly and yearly time. 
 
 
-## Account
+### Account
 
 - create an account
 - delete an account
@@ -18,7 +18,7 @@ Account:
 * description
 * initial_balance
 
-## Transaction 
+### Transaction 
 
 
 - create a transaction
@@ -33,6 +33,15 @@ Transaction:
 * description
 
 
-## Statistic
-
+### Statistic
 Generate statistics for accounts and aggregate transaction value
+
+## To Start:
+
+- git clone git@github.com:wesolyigor/drf_api_blog.git
+
+- pipenv install
+
+- move to config.api_money package file `.env-default` and change name to `.env`
+
+- python manage.py runserver
