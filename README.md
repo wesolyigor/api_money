@@ -45,3 +45,4 @@ Generate statistics for accounts and aggregate transaction value
 - move to config.api_money package file `.env-default` and change name to `.env`
 
 - python manage.py runserver
+
