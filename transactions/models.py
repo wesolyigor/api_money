@@ -1,5 +1,6 @@
 from decimal import Decimal
 
+from django.conf import settings
 from django.db import models
 from django.db.models import Sum
 from django.db.models.functions import Coalesce
@@ -8,6 +9,7 @@ from transactions.constans import TransactionTypE
 
 
 class Account(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=250, null=True, blank=True)
     initial_balance = models.DecimalField(max_digits=10, decimal_places=2)
@@ -42,6 +44,7 @@ class Account(models.Model):
 
 
 class Transaction(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     description = models.CharField(max_length=250, null=True, blank=True)
     transaction_type = models.SmallIntegerField(choices=[(

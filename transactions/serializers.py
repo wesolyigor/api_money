@@ -9,6 +9,7 @@ class AccountSerializer(serializers.ModelSerializer):
         model = Account
         fields = (
             'id',
+            'user',
             'name',
             'description',
             'initial_balance',
@@ -23,6 +24,7 @@ class TransactionSerializer(serializers.ModelSerializer):
         fields = (
             'id',
             'amount',
+            'user',
             'description',
             'transaction_type',
             'account',
